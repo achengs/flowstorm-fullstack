@@ -1,0 +1,24 @@
+{:paths ["src"]
+ :deps {ring/ring-core {:mvn/version "1.10.0"}
+        ring/ring-json {:mvn/version "0.5.1"}
+        http-kit/http-kit {:mvn/version "2.6.0"}
+        metosin/reitit-ring {:mvn/version "0.7.0-alpha5"}
+        ring-cors/ring-cors {:mvn/version "0.1.13"}
+        cljs-ajax/cljs-ajax {:mvn/version "0.8.4"}
+        reagent/reagent {:mvn/version "1.2.0"}
+        org.clojure/clojurescript {:mvn/version "1.11.132"}}
+ :aliases {:cljs-storm {:classpath-overrides {org.clojure/clojurescript nil}
+                        :extra-deps {thheller/shadow-cljs {:mvn/version "2.28.21"
+                                                           :exclusions [org.clojure/clojurescript]}
+                                     com.github.flow-storm/clojurescript {:mvn/version "1.11.132-9"}
+                                     com.github.flow-storm/flow-storm-inst {:mvn/version "4.2.1"}}
+                        :jvm-opts ["-Dcljs.storm.instrumentOnlyPrefixes=org.foo,dev"
+                                   "-Dcljs.storm.instrumentSkipPrefixes=dev.skipped"
+                                   "-Dcljs.storm.instrumentSkipRegex=.*test.*"
+                                   "-Dcljs.storm.instrumentEnable=true"
+                                   "-Dflowstorm.startRecording=true"]}
+           :vanilla {:extra-deps {thheller/shadow-cljs {:mvn/version "2.28.21"}
+                                  com.github.flow-storm/flow-storm-inst {:mvn/version "4.2.1"}}}
+           :backend-storm {:extra-deps {com.github.flow-storm/flow-storm-inst {:mvn/version "4.2.1"}}
+                          :jvm-opts ["-Dcljs.storm.instrumentOnlyPrefixes=org.foo.backend,org.foo.api"
+                                     "-Dflowstorm.startRecording=true"]}}}
