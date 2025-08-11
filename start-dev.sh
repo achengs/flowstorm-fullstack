@@ -3,6 +3,25 @@
 echo "🚀 Starting Full-Stack FlowStorm Development Environment"
 echo "=========================================================="
 
+# Check for node_modules and prompt to install if missing
+if [ ! -d "node_modules" ]; then
+    echo "⚠️ Node modules not found. It seems you haven't run 'npm install'."
+    read -p "Do you want to run 'npm install' now? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "📦 Running 'npm install'..."
+        npm install
+        if [ $? -ne 0 ]; then
+            echo "❌ 'npm install' failed. Please run it manually and then restart the script."
+            exit 1
+        fi
+        echo "✅ 'npm install' complete."
+    else
+        echo "🛑 Please run 'npm install' manually and then restart the script."
+        exit 1
+    fi
+fi
+
 # Check if ports are available
 if lsof -i :7722 >/dev/null 2>&1; then
     echo "❌ Port 7722 (Frontend FlowStorm) is busy"
